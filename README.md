@@ -25,7 +25,7 @@ entities以下のパスを指定することでアトリビュートの値など
 詳細は以下の学習コンテンツPart2をご参照ください。
 * https://github.com/c-3lab/fiware-learning-handson
 
-## データ全体の更新
+### データ全体の更新
 
 ```
 curl https://orion.c-3lab.org/v2/entities/${変更したいエンティティ名}/attrs /
@@ -36,7 +36,7 @@ curl https://orion.c-3lab.org/v2/entities/${変更したいエンティティ名
 
 更新データはEOFで記述することも可能です。
 
-## データ一部の更新
+### データ一部の更新
 
 ```
 curl https://orion.c-3lab.org/v2/entities/${変更したいエンティティ名}/attrs/${更新したいアトリビュート名}/value /
@@ -46,9 +46,9 @@ curl https://orion.c-3lab.org/v2/entities/${変更したいエンティティ名
 -X PUT -d ${更新後の値}
 ```
 
-# 時系列データの利用方法
+## 時系列データの利用方法
 
-## 時系列データの登録
+### 時系列データの登録
 
 時系列データを追加していくためにはOrionにサブスクリプションを設定する必要があります。  
 以下にサブスクリプションを設定するための例を提示します。
@@ -71,7 +71,8 @@ curl -i https://orion.c-3lab.org/v2/subscriptions /
       ],
       "condition": {
           "attrs": [
-          "${変更を検知するアトリビュート名}"
+          "${変更を検知するアトリビュート名①}"
+          "${変更を検知するアトリビュート名②}"
           ]
       }
   },
@@ -80,7 +81,8 @@ curl -i https://orion.c-3lab.org/v2/subscriptions /
           "url": "http://quantumleap:8668/v2/notify"
       },
       "attrs": [
-      "${変更があった際に送信するアトリビュート名}"
+      "${変更があった際に送信するアトリビュート名①}",
+      "${変更があった際に送信するアトリビュート名②}",
       ],
       "metadata": ["dateCreated", "dateModified"]
   },
@@ -91,7 +93,7 @@ EOF
 
 アトリビュートの値に変更があった際にデータ記録先にデータをPOSTする設定です。
 
-## 時系列データの取得
+### 時系列データの取得
 
 登録されているすべてのデータを取得する例を以下に提示します。
 
