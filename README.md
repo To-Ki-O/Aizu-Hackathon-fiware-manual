@@ -12,7 +12,7 @@
 
 ```curl https://orion.c-3lab.org/v2/entities -H "Authorization: ${APIキー}" -H "Fiware-Service: ${チームごとのテナント名}"```
 
-entities以下のパスを指定することでアトリビュートの値などを取得することが出来ます。
+entities以下のパスを指定することでアトリビュートの値などを取得することが出来ます。  
 詳細は以下の学習コンテンツPart2をご参照ください。
 * https://github.com/c-3lab/fiware-learning-handson
 
@@ -30,7 +30,7 @@ entities以下のパスを指定することでアトリビュートの値など
 
 ## 時系列データの登録
 
-時系列データを追加していくためにはOrionにサブスクリプションを設定する必要があります。
+時系列データを追加していくためにはOrionにサブスクリプションを設定する必要があります。  
 以下にサブスクリプションを設定するための例を提示します。
 
 ```
@@ -72,7 +72,7 @@ EOF
 
 ```curl https://quantumleap.c-3lab.org/v2/entities -H "Authorization: ${APIキー}" -H "Fiware-Service: ${チームごとのテナント名}" -H "fiware-servicepath: /"```
 
-entities以下のパスを指定することでアトリビュートやタイプごとのデータ取得が可能です。
-以下のURLにパスの指定方法が記載されている公式のドキュメントがありますので、queriesの欄をご参照ください。
-	※GET以外のAPIは利用を制限させていただいております。ご了承ください。
+entities以下のパスを指定することでアトリビュートやタイプごとのデータ取得が可能です。  
+以下のURLにパスの指定方法が記載されている公式のドキュメントがありますので、queriesの欄をご参照ください。  
+	※GET以外のAPIは利用を制限させていただいております。ご了承ください。  
 * https://app.swaggerhub.com/apis/smartsdk/ngsi-tsdb/0.8.3#/
