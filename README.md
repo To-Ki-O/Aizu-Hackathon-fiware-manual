@@ -33,6 +33,7 @@ entities以下のパスを指定することでアトリビュートの値など
 時系列データを追加していくためにはOrionにサブスクリプションを設定する必要があります。
 以下にサブスクリプションを設定するための例を提示します。
 
+```
 curl -i https://orion.c-3lab.org/v2/subscriptions -H "Content-Type: application/json" -H "Authorization: ${APIキー}" -H "Fiware-Service: ${チームごとのテナント名}" -H "fiware-servicepath: /" -d @- <<EOF
 {
   "description": "${サブスクリプションの説明}",
@@ -61,6 +62,7 @@ curl -i https://orion.c-3lab.org/v2/subscriptions -H "Content-Type: application/
   "throttling": 1
 }
 EOF
+```
 
 アトリビュートの値に変更があった際にデータ記録先にデータをPOSTする設定です。
 
