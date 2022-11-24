@@ -158,31 +158,35 @@ curl https://orion.c-3lab.org/v2/entities/Room1/attrs/temperature/value /
 
 ## 時系列データの利用方法
 
+![Quantumleap利用の流れ](./pictures/Quantumleap.jpg)
+
 ### 時系列データの登録
 
-時系列データを追加していくためにはOrionにサブスクリプションを設定する必要があります。  
+時系列データはQuantumleapというサービスで取り扱っています。  
+このQuantumleapにデータを入れるにはOrionを通す必要があります。  
+orionがデータをQuantumleapへ流すために必要な設定がサブスクリプション設定になります。  
 以下にサブスクリプションを設定するための例を提示します。
 
 ```
 curl -i https://orion.c-3lab.org/v2/subscriptions /
 -H "Content-Type: application/json" /
--H "Authorization: ${APIキー}" /
--H "Fiware-Service: ${チームごとのテナント名}" /
+-H "Authorization: API_KEY" /
+-H "Fiware-Service: TENANT_NAME" /
 -H "fiware-servicepath: /" /
 -d @- <<EOF
 {
-  "description": "${サブスクリプションの説明}",
+  "description": "DESCRIPTION_ABOUT_THIS_SUBSCRIPTION",
   "subject": {
       "entities": [
       {
-          "idPattern": "${変更を検知するエンティティ名}",
-          "type": "${変更を検知するエンティティのタイプ}"
+          "idPattern": "Room1",
+          "type": "Room"
       }
       ],
       "condition": {
           "attrs": [
-          "${変更を検知するアトリビュート名①}"
-          "${変更を検知するアトリビュート名②}"
+          "temperature"
+          "pressure"
           ]
       }
   },
@@ -191,8 +195,8 @@ curl -i https://orion.c-3lab.org/v2/subscriptions /
           "url": "http://quantumleap:8668/v2/notify"
       },
       "attrs": [
-      "${変更があった際に送信するアトリビュート名①}",
-      "${変更があった際に送信するアトリビュート名②}",
+      "tempreture",
+      "pressure",
       ],
       "metadata": ["dateCreated", "dateModified"]
   },
@@ -201,20 +205,34 @@ curl -i https://orion.c-3lab.org/v2/subscriptions /
 EOF
 ```
 
-アトリビュートの値に変更があった際にデータ記録先にデータをPOSTする設定です。
+上記の設定はRoom1のエンティティの気温と気圧に変更があった際に  
+気温と気圧の情報をQuantumleapに送信する設定を示しています。
+
+このサブスクリプション設定を行い、Orionにデータを追加または更新します。
+そうすることでデータがQuantumleapに自動で送られ、時系列データとして取り扱われます。  
 
 ### 時系列データの取得
 
+時系列データとして扱われているデータの取り出しはQuantumleapから直接行います。  
 登録されているすべてのデータを取得する例を以下に提示します。
 
 ```
 curl https://quantumleap.c-3lab.org/v2/entities /
--H "Authorization: ${APIキー}" /
--H "Fiware-Service: ${チームごとのテナント名}" /
+-H "Authorization: API_KEY" /
+-H "Fiware-Service: TENANT_NAME" /
 -H "fiware-servicepath: /"
 ```
 
 entities以下のパスを指定することでアトリビュートやタイプごとのデータ取得が可能です。  
+以下に例を提示します。(Room1のtemperatureの時系列データを取得している)
+
+```
+curl https://quantumleap.c-3lab.org/v2/entities/Room1/attrs/temperature/value / 
+-H "Authorization: API_KEY" /
+-H "Fiware-Service: TENANT_NAME" /
+-H "fiware-servicepath: /"
+```
+
 以下のURLにパスの指定方法が記載されている公式のドキュメントがありますので、queriesの欄をご参照ください。  
 	※GET以外のAPIは利用を制限させていただいております。ご了承ください。  
 * https://app.swaggerhub.com/apis/smartsdk/ngsi-tsdb/0.8.3#/
